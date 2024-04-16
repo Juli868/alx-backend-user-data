@@ -18,7 +18,10 @@ class Auth():
 
     def authorization_header(self, request=None) -> str:
         """Provide the header with credentials."""
-        return None
+        if request is None or 'Authorization' not in request.headers:
+            return None
+        return request.header['Authorization']
+
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Determine the current user."""
