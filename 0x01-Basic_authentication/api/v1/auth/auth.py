@@ -8,8 +8,13 @@ class Auth():
     """Authentication center."""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Provide the credentials."""
-        return False
+        """Determine if necessary to be logged in."""
+        if path is None or excluded_paths is None or len(excluded_paths) == 0:
+            return True
+        for checker in excluded_paths:
+            if path.rstrip('/') == checker.rstrip('/'):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Provide the header with credentials."""
