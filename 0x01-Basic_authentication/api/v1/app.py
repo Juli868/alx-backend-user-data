@@ -19,9 +19,9 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(401)
-def unauthorised(erro) -> str:
+def unauthorized(error) -> str:
     """Unauthorised error handler."""
-    return jsonify({'error': 'Unauthorised'}), 404
+    return jsonify({'error': 'Unauthorised'}), 401
 
 
 if __name__ == "__main__":
