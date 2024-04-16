@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Deal with all authentication process and requirements."""
 from flask import request
+from typing import List, TypeVar
 
 
 class Auth():
