@@ -2,4 +2,4 @@
 
 ## 0x00 [] ()
 
-## 0x01. [Basic authentication] ()
+## 0x01. [Basic authentication] (https://github.com/Juli868/alx-backend-user-data/tree/master/0x01-Basic_authentication)
