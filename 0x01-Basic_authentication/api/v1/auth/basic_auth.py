@@ -22,7 +22,7 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(
             self, base64_authorization_header: str) -> str:
         """Decode a base64 header to find the credentials."""
-        if base_64_authorization_header is None:
+        if base64_authorization_header is None:
             return None
         if not isinstance(base64_authorization_header, str):
             return None
@@ -30,5 +30,5 @@ class BasicAuth(Auth):
             primary = base64.b64decode(base64_authorization_header)
             res = primary.decode('utf-8')
             return res
-        except(TypeError, UnicodeDecodeError):
+        except Exception:
             return None
