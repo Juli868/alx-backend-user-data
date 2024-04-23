@@ -21,4 +21,4 @@ class User(Base):
         self.email = email
         self.hashed_password = pwd
         self.id = User.next_id
-        User.next_id +=1
+        User.next_id += 1
