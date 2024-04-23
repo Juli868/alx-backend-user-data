@@ -15,3 +15,10 @@ class User(Base):
     hashed_password = Column(String(250))
     session_id = Column(String(250))
     reset_token = Column(String(250))
+    next_id = 1
+
+    def __init__(self, email: str, pwd: str):
+        self.email = email
+        self.hashed_password = pwd
+        self.id = User.next_id
+        User.next_id +=1
