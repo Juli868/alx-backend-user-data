@@ -31,7 +31,10 @@ if AUTH_TYPE:
         check_in_list = [
                 '/api/v1/status/',
                 '/api/v1/unauthorized/',
+                '/api/v1/auth_session/login/',
                 '/api/v1/forbidden/']
+        if auth.authorization_header(request) and auth.session_cookie(request) is None:
+            abort(401)
         if auth.require_auth(request.path, check_in_list):
             if auth.authorization_header(request) is None:
                 abort(401)
