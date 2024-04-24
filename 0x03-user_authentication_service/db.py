@@ -33,15 +33,19 @@ class DB:
         self._session.add(new)
         self._session.commit()
         return new
-    def find_user_by(self, email=None, id=None) -> User:
+
+    def find_user_by(self, **kwargs) -> User:
         """Find the user accornding to the dictionary provided."""
-        if email is None and id is None:
+        if kwargs is None and id is None:
             raise InvalidRequestError
-        if email is not None:
+        if kwargs is not None:
             try:
-                result = self._session.query(User).filter(email).first
-                if result is None:
-                    raise NoResultFound
-            except InvalidRequestError as e:
-                raise InvalidRequestError
-            return result
+                return self._session.query(User).filter(**kwargs).first
+            except NoResultFound:
+                raise
+            except InvalidRequestError:
+                raise
+
+    def update_user(**kwargs):
+        """Update the credentials."""
+        pass
