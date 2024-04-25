@@ -3,6 +3,8 @@
 import bcrypt
 from db import DB
 from user import User
+from sqlalchemy.orm.exc import NoResultFound
+
 
 
 def _hash_password(password: str) -> bytes:
@@ -24,12 +26,12 @@ class Auth:
         try:
             if existing_user:
                 raise ValueError(f"User {email} already exists")
-            except NoResultFound:
+        except NoResultFound:
                 pass
         hashed_pwd = _hash_password(password)
         new_user = User(email, hashed_pwd)
         return new_user
-    
+
     def valid_login(self, email: str, password: str) -> bool:
         """Check for the given credentials."""
         try:
