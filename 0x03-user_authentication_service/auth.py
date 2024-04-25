@@ -22,7 +22,7 @@ class Auth:
         """Create a user with given credentials."""
         existing_user = self._db.find_user_by(email=email)
         if existing_user:
-            raise ValueError("User <user's email> already exists")
+            raise ValueError(f"User {email} already exists")
         hashed_pwd = _hash_password(password)
         new_user = User(email, hashed_pwd)
         return new_user
