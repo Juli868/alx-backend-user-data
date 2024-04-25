@@ -40,10 +40,10 @@ class DB:
             raise InvalidRequestError
         if not all(key in User.__table__.columns.keys() for key in kwargs):
              raise InvalidRequestError
-         result = self._session.query(User).filter(**kwargs).first()
-         if not result:
-             raise NoResultFound
-         return result
+        result = self._session.query(User).filter(**kwargs).first()
+        if not result:
+            raise NoResultFound
+        return result
     
     def update_user(self, user_id: None, **kwargs):
         """Update the credentials."""
