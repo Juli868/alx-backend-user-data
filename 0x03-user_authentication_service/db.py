@@ -34,23 +34,30 @@ class DB:
         self._session.commit()
         return new
 
+    @staticmethod
+    def keys_check(kwargs: dict) -> None:
+        """Check if provided value is valid."""
+        acceptable_keys = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in acceptable_keys:
+                raise InvalidRequestError
+
     def find_user_by(self, **kwargs) -> User:
         """Find the user accornding to the dictionary provided."""
-        if not kwargs:
-            raise InvalidRequestError
-        if not all(key in User.__table__.columns.keys() for key in kwargs):
-             raise InvalidRequestError
+        self.keys_check(kwargs)
         result = self._session.query(User).filter(**kwargs).first()
         if not result:
             raise NoResultFound
         return result
-    
+
     def update_user(self, user_id: None, **kwargs):
         """Update the credentials."""
+        try:
+            self.keys_check(kwargs)
+        except InvalidRequestError:
+            raise ValueError
         user = self.find_user(id=user_id)
         for key, value in kwargs.items():
             if hasattr(user, key):
-                setattr(user,value)
-            else:
-                raise ValueError
+                setattr(user, value)
         self._session.commit()
