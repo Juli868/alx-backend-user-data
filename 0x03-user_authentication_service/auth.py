@@ -21,8 +21,11 @@ class Auth:
     def register_user(self, email: str, password: str) -> User:
         """Create a user with given credentials."""
         existing_user = self._db.find_user_by(email=email)
-        if existing_user:
-            raise ValueError(f"User {email} already exists")
+        try:
+            if existing_user:
+                raise ValueError(f"User {email} already exists")
+            except NoResultFound:
+                pass
         hashed_pwd = _hash_password(password)
         new_user = User(email, hashed_pwd)
         return new_user
