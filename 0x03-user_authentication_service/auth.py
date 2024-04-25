@@ -29,3 +29,14 @@ class Auth:
         hashed_pwd = _hash_password(password)
         new_user = User(email, hashed_pwd)
         return new_user
+    
+    def valid_login(self, email: str, password: str) -> bool:
+        """Check for the given credentials."""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+        if (bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)):
+            return True
+        else:
+            return False
