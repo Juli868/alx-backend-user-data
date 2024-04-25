@@ -36,16 +36,21 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """Find the user accornding to the dictionary provided."""
-        if kwargs is None and id is None:
+        if not kwargs:
             raise InvalidRequestError
-        if kwargs is not None:
-            try:
-                return self._session.query(User).filter(**kwargs).first
-            except NoResultFound:
-                raise
-            except InvalidRequestError:
-                raise
-
-    def update_user(**kwargs):
+        if not all(key in User.__table__.columns.keys() for key in kwargs):
+             raise InvalidRequestError
+         result = self._session.query(User).filter(**kwargs).first()
+         if not result:
+             raise NoResultFound
+         return result
+    
+    def update_user(self, user_id: None, **kwargs):
         """Update the credentials."""
-        pass
+        user = self.find_user(id=user_id)
+        for key, value in kwargs.items():
+            if hasattr(user, key):
+                setattr(user,value)
+            else:
+                raise ValueError
+        self._session.commit()
