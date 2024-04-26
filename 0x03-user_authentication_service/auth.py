@@ -6,7 +6,6 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 
 
-
 def _hash_password(password: str) -> bytes:
     """Transform string password to encrypted bytes."""
     salt = bcrypt.gensalt()
@@ -27,7 +26,7 @@ class Auth:
             if existing_user:
                 raise ValueError(f"User {email} already exists")
         except NoResultFound:
-                pass
+            pass
         hashed_pwd = _hash_password(password)
         new_user = User(email, hashed_pwd)
         return new_user
@@ -42,3 +41,7 @@ class Auth:
             return True
         else:
             return False
+
+    def _generate_uuid() -> str:
+        """Create a unique id."""
+        return str(uuid.uuid4())
